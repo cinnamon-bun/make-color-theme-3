@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as Color from 'color';
+import * as React from 'react'
+import './app.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import { Atom } from './atom';
+import { initialColors, State, ICoreColors } from './types';
+
+//================================================================================
+
+let state: State = new Atom<ICoreColors>({ ...initialColors });
+
+//================================================================================
+
+interface ColorPickerProps {
+    state: State,
+    name: string,
+}
+let ColorPicker = (props: ColorPickerProps) => {
+    let state = props.state.get();
+    let name = props.name;
+    let color = state[name as 'w'];
+    return <div className='stack'>
+        <input type="color" value={color.hex()} onChange={e => console.log(e.target.value)} />
+        <b>&nbsp; {name}</b>
     </div>
-  );
 }
 
-export default App;
+//================================================================================
+
+export default function App() {
+    return (<main className='app'>
+        <ColorPicker state={state} name={'w'} />
+        <ColorPicker state={state} name={'r'} />
+        <ColorPicker state={state} name={'g'} />
+        <ColorPicker state={state} name={'b'} />
+        <ColorPicker state={state} name={'k'} />
+        <hr />
+    </main>)
+}
