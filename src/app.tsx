@@ -72,30 +72,36 @@ export default function App() {
     return <main className='app stack'>
         <div className='colorGrid'>
             <ColorPicker style={{gridColumn: '1', gridRow: '1'}} state={state} name={'w'} />
-            <ColorPicker style={{gridColumn: '2', gridRow: '1'}} state={state} name={'w'} />
-            <ColorPicker style={{gridColumn: '3', gridRow: '1'}} state={state} name={'w'} />
-            <ColorPicker style={{gridColumn: '4', gridRow: '1'}} state={state} name={'w'} />
-
-            <ColorPicker style={{gridColumn: '2', gridRow: '3'}} state={state} name={'r'} />
-            <ColorPicker style={{gridColumn: '3', gridRow: '3'}} state={state} name={'g'} />
-            <ColorPicker style={{gridColumn: '4', gridRow: '3'}} state={state} name={'b'} />
 
             <ColorPicker style={{gridColumn: '1', gridRow: '5'}} state={state} name={'k'} />
-            <ColorPicker style={{gridColumn: '2', gridRow: '5'}} state={state} name={'k'} />
-            <ColorPicker style={{gridColumn: '3', gridRow: '5'}} state={state} name={'k'} />
-            <ColorPicker style={{gridColumn: '4', gridRow: '5'}} state={state} name={'k'} />
 
-            <ColorSwatch style={{gridColumn: '1', gridRow: '2'}} c={pal.w.mix(pal.k, 0.25)} text={'wk25'} />
-            <ColorSwatch style={{gridColumn: '1', gridRow: '3'}} c={pal.w.mix(pal.k, 0.50)} text={'wk50'} />
-            <ColorSwatch style={{gridColumn: '1', gridRow: '4'}} c={pal.w.mix(pal.k, 0.75)} text={'wk75'} />
+            <ColorSwatch style={{gridColumn: '1', gridRow: '2'}} c={pal.w.mix(pal.k, 0.25)} text={'wk-w'} />
+            <ColorSwatch style={{gridColumn: '1', gridRow: '3'}} c={pal.w.mix(pal.k, 0.50)} text={'wk'} />
+            <ColorSwatch style={{gridColumn: '1', gridRow: '4'}} c={pal.w.mix(pal.k, 0.75)} text={'wk-k'} />
 
-            <ColorSwatch style={{gridColumn: '2', gridRow: '2'}} c={pal.r.mix(pal.w, 0.5)} text={'rw'} />
-            <ColorSwatch style={{gridColumn: '3', gridRow: '2'}} c={pal.g.mix(pal.w, 0.5)} text={'gw'} />
-            <ColorSwatch style={{gridColumn: '4', gridRow: '2'}} c={pal.b.mix(pal.w, 0.5)} text={'bw'} />
+            <ColorSwatch style={{gridColumn: '2', gridRow: '2'}} c={pal.b.mix(pal.r, 0.5).mix(pal.w, 0.5)} text={'br-w'} />
+            <ColorSwatch style={{gridColumn: '2', gridRow: '3'}} c={pal.b.mix(pal.r, 0.5)} text={'br'} />
+            <ColorSwatch style={{gridColumn: '2', gridRow: '4'}} c={pal.b.mix(pal.r, 0.5).mix(pal.k, 0.5)} text={'br-k'} />
 
-            <ColorSwatch style={{gridColumn: '2', gridRow: '4'}} c={pal.r.mix(pal.k, 0.5)} text={'rk'} />
-            <ColorSwatch style={{gridColumn: '3', gridRow: '4'}} c={pal.g.mix(pal.k, 0.5)} text={'gk'} />
-            <ColorSwatch style={{gridColumn: '4', gridRow: '4'}} c={pal.b.mix(pal.k, 0.5)} text={'bk'} />
+            <ColorSwatch style={{gridColumn: '3', gridRow: '2'}} c={pal.r.mix(pal.w, 0.5)} text={'r-w'} />
+            <ColorPicker style={{gridColumn: '3', gridRow: '3'}} state={state} name={'r'} />
+            <ColorSwatch style={{gridColumn: '3', gridRow: '4'}} c={pal.r.mix(pal.k, 0.5)} text={'r-k'} />
+
+            <ColorSwatch style={{gridColumn: '4', gridRow: '2'}} c={pal.r.mix(pal.g, 0.5).mix(pal.w, 0.5)} text={'rg-w'} />
+            <ColorSwatch style={{gridColumn: '4', gridRow: '3'}} c={pal.r.mix(pal.g, 0.5)} text={'rg'} />
+            <ColorSwatch style={{gridColumn: '4', gridRow: '4'}} c={pal.r.mix(pal.g, 0.5).mix(pal.k, 0.5)} text={'rg-k'} />
+
+            <ColorSwatch style={{gridColumn: '5', gridRow: '2'}} c={pal.g.mix(pal.w, 0.5)} text={'g-w'} />
+            <ColorPicker style={{gridColumn: '5', gridRow: '3'}} state={state} name={'g'} />
+            <ColorSwatch style={{gridColumn: '5', gridRow: '4'}} c={pal.g.mix(pal.k, 0.5)} text={'g-k'} />
+
+            <ColorSwatch style={{gridColumn: '6', gridRow: '2'}} c={pal.g.mix(pal.b, 0.5).mix(pal.w, 0.5)} text={'gb-w'} />
+            <ColorSwatch style={{gridColumn: '6', gridRow: '3'}} c={pal.g.mix(pal.b, 0.5)} text={'gb'} />
+            <ColorSwatch style={{gridColumn: '6', gridRow: '4'}} c={pal.g.mix(pal.b, 0.5).mix(pal.k, 0.5)} text={'gb-k'} />
+
+            <ColorSwatch style={{gridColumn: '7', gridRow: '2'}} c={pal.b.mix(pal.w, 0.5)} text={'b-w'} />
+            <ColorPicker style={{gridColumn: '7', gridRow: '3'}} state={state} name={'b'} />
+            <ColorSwatch style={{gridColumn: '7', gridRow: '4'}} c={pal.b.mix(pal.k, 0.5)} text={'b-k'} />
         </div>
         <hr />
         <div className='colorGrid'>
