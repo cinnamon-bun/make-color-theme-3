@@ -19,21 +19,30 @@ let ColorPicker = (props: ColorPickerProps) => {
     let state = props.state.get();
     let name = props.name;
     let color = state[name as 'w'];
-    return <div className='stack'>
-        <input type="color" value={color.hex()} onChange={e => console.log(e.target.value)} />
-        <b>&nbsp; {name}</b>
+    let handleChange = (colorHex: string) => {
+        console.log(colorHex);
+    }
+    return <div>
+        <input
+            type="color"
+            value={color.hex()}
+            onChange={e => handleChange(e.target.value)}
+            />
+        <b>&nbsp; &nbsp; {name}</b>
     </div>
 }
 
 //================================================================================
 
 export default function App() {
-    return (<main className='app'>
-        <ColorPicker state={state} name={'w'} />
-        <ColorPicker state={state} name={'r'} />
-        <ColorPicker state={state} name={'g'} />
-        <ColorPicker state={state} name={'b'} />
-        <ColorPicker state={state} name={'k'} />
+    return <main className='app'>
+        <div className='stack'>
+            <ColorPicker state={state} name={'w'} />
+            <ColorPicker state={state} name={'r'} />
+            <ColorPicker state={state} name={'g'} />
+            <ColorPicker state={state} name={'b'} />
+            <ColorPicker state={state} name={'k'} />
+        </div>
         <hr />
-    </main>)
+    </main>
 }

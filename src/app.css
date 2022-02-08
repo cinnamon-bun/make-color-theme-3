@@ -1,6 +1,7 @@
 
 body {
     background-color: #777777;
+    color: #cccccc;
     padding: 20px;
 }
 
@@ -10,6 +11,24 @@ hr {
     background-color: #555555;
 }
 
-.stack {
-    padding-bottom: 10px;
+input[type="color"] {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    overflow: hidden;
+    vertical-align: middle;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0; 
+}
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    margin: -10px;
+}
+
+.stack * + * {
+    padding-top: 10px;
 }
