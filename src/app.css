@@ -11,15 +11,24 @@ hr {
     background-color: #555555;
 }
 
+.colorCircle {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    vertical-align: middle;
+}
+
 input[type="color"] {
     border-radius: 50%;
     height: 50px;
     width: 50px;
-    border: none;
+    border: 2px solid black;
+    margin: -2px;
     outline: none;
     -webkit-appearance: none;
     overflow: hidden;
     vertical-align: middle;
+    display: block;
 }
 input[type="color"]::-webkit-color-swatch-wrapper {
     padding: 0; 
@@ -31,4 +40,12 @@ input[type="color"]::-webkit-color-swatch {
 
 .stack * + * {
     padding-top: 10px;
+}
+
+.rows {
+    display: flexbox;
+}
+.rows > * {
+    display: inline-block;
+    padding-right: 10px;
 }

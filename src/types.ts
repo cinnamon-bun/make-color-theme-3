@@ -8,6 +8,8 @@ export interface ICoreColors {
     b: Color,
     k: Color,
 }
+export type State = Atom<ICoreColors>;
+
 export let initialColors = {
     w: Color.rgb(255, 255, 255),
     r: Color.rgb(255, 0, 0),
@@ -15,5 +17,3 @@ export let initialColors = {
     b: Color.rgb(0, 0, 255),
     k: Color.rgb(0, 0, 0),
 }
-
-export type State = Atom<ICoreColors>;
