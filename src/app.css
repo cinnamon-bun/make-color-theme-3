@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 
 body {
     background-color: #777777;
@@ -11,41 +14,48 @@ hr {
     background-color: #555555;
 }
 
-.colorCircle {
-    border-radius: 50%;
-    height: 50px;
-    width: 50px;
-    vertical-align: middle;
-}
-
 input[type="color"] {
-    border-radius: 50%;
     height: 50px;
     width: 50px;
-    border: 2px solid black;
-    margin: -2px;
+    border: none;
     outline: none;
     -webkit-appearance: none;
     overflow: hidden;
-    vertical-align: middle;
-    display: block;
 }
 input[type="color"]::-webkit-color-swatch-wrapper {
-    padding: 0; 
+    margin: 0px;
 }
 input[type="color"]::-webkit-color-swatch {
     border: none;
-    margin: -10px;
+    margin: -30px;
 }
 
-.stack * + * {
-    padding-top: 10px;
+.colorSwatch {
+    border-radius: 12px;
+    height: 50px;
+    width: 50px;
+    vertical-align: middle;
 }
 
+.colorGrid {
+    display: grid;
+    gap: 0px 0px;
+    justify-content: start;
+    align-content: start;
+    grid-auto-columns: 50px;
+    grid-auto-rows: 50px;
+}
+
+.stack > * + * {
+    margin-top: 30px;
+}
+
+/*
 .rows {
     display: flexbox;
 }
 .rows > * {
     display: inline-block;
-    padding-right: 10px;
+    margin-right: 10px;
 }
+*/

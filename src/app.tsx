@@ -1,5 +1,5 @@
-import * as Color from 'color';
-import * as React from 'react'
+import Color from 'color';
+import React, { useState, useEffect } from 'react'
 import './app.css'
 
 import { Atom } from './atom';
@@ -14,22 +14,26 @@ let state: State = new Atom<ICoreColors>({ ...initialColors });
 interface ColorPickerProps {
     state: State,
     name: string,
+    style?: React.CSSProperties,
 }
 let ColorPicker = (props: ColorPickerProps) => {
-    let state = props.state.get();
+    let coreColors = props.state.get();
     let name = props.name;
-    let color = state[name as 'w'];
+    let color = coreColors[name as 'w'];
     let handleChange = (colorHex: string) => {
-        console.log(colorHex);
+        console.log('[ColorPicker]', colorHex);
+        let newCoreColors = {
+            ...coreColors,
+            [name]: Color(colorHex),
+        };
+        props.state.set(newCoreColors);
     }
-    return <div>
-        <b>{name}</b>
-        <input
-            type="color"
-            value={color.hex()}
-            onChange={e => handleChange(e.target.value)}
-            />
-    </div>
+    return <input
+        style={props.style}
+        type="color"
+        value={color.hex()}
+        onChange={e => handleChange(e.target.value)}
+        />
 }
 
 //================================================================================
@@ -37,41 +41,69 @@ let ColorPicker = (props: ColorPickerProps) => {
 interface ColorSwatchProps {
     c: Color,
     text?: string,
+    style?: React.CSSProperties,
 }
 let ColorSwatch = (props: ColorSwatchProps) => {
-    let { c, text } = props;
-    return <div>
-        <b>{text || ''}</b>
-        <div className='colorCircle' style={{backgroundColor: c.hex()}} />
-    </div>
+    let { c, text, style } = props;
+    return <div
+        className='colorSwatch'
+        style={{...style ?? {}, backgroundColor: c.hex()}}
+    />;
 }
 
 //================================================================================
 
+state.onChange((oldVal, newVal) => {
+    console.log('[state] changed:', oldVal, newVal);
+});
+
 export default function App() {
+
+    let [numRenders, forceRerender] = useState(0);
+    useEffect(() => {
+        let unsub = state.onChange((oldVal, newVal) => {
+            console.log('[App] forceRerender');
+            forceRerender(numRenders + 1);
+        });
+        return unsub;
+    });
+
     let pal = state.get();
-    return <main className='app'>
-        <div className='stack'>
-            <ColorPicker state={state} name={'w'} />
-            <ColorPicker state={state} name={'r'} />
-            <ColorPicker state={state} name={'g'} />
-            <ColorPicker state={state} name={'b'} />
-            <ColorPicker state={state} name={'k'} />
+    return <main className='app stack'>
+        <div className='colorGrid'>
+            <ColorPicker style={{gridColumn: '1', gridRow: '1'}} state={state} name={'w'} />
+            <ColorPicker style={{gridColumn: '2', gridRow: '1'}} state={state} name={'w'} />
+            <ColorPicker style={{gridColumn: '3', gridRow: '1'}} state={state} name={'w'} />
+            <ColorPicker style={{gridColumn: '4', gridRow: '1'}} state={state} name={'w'} />
+
+            <ColorPicker style={{gridColumn: '2', gridRow: '3'}} state={state} name={'r'} />
+            <ColorPicker style={{gridColumn: '3', gridRow: '3'}} state={state} name={'g'} />
+            <ColorPicker style={{gridColumn: '4', gridRow: '3'}} state={state} name={'b'} />
+
+            <ColorPicker style={{gridColumn: '1', gridRow: '5'}} state={state} name={'k'} />
+            <ColorPicker style={{gridColumn: '2', gridRow: '5'}} state={state} name={'k'} />
+            <ColorPicker style={{gridColumn: '3', gridRow: '5'}} state={state} name={'k'} />
+            <ColorPicker style={{gridColumn: '4', gridRow: '5'}} state={state} name={'k'} />
+
+            <ColorSwatch style={{gridColumn: '1', gridRow: '2'}} c={pal.w.mix(pal.k, 0.25)} text={'wk25'} />
+            <ColorSwatch style={{gridColumn: '1', gridRow: '3'}} c={pal.w.mix(pal.k, 0.50)} text={'wk50'} />
+            <ColorSwatch style={{gridColumn: '1', gridRow: '4'}} c={pal.w.mix(pal.k, 0.75)} text={'wk75'} />
+
+            <ColorSwatch style={{gridColumn: '2', gridRow: '2'}} c={pal.r.mix(pal.w, 0.5)} text={'rw'} />
+            <ColorSwatch style={{gridColumn: '3', gridRow: '2'}} c={pal.g.mix(pal.w, 0.5)} text={'gw'} />
+            <ColorSwatch style={{gridColumn: '4', gridRow: '2'}} c={pal.b.mix(pal.w, 0.5)} text={'bw'} />
+
+            <ColorSwatch style={{gridColumn: '2', gridRow: '4'}} c={pal.r.mix(pal.k, 0.5)} text={'rk'} />
+            <ColorSwatch style={{gridColumn: '3', gridRow: '4'}} c={pal.g.mix(pal.k, 0.5)} text={'gk'} />
+            <ColorSwatch style={{gridColumn: '4', gridRow: '4'}} c={pal.b.mix(pal.k, 0.5)} text={'bk'} />
         </div>
         <hr />
-        <div className='rows'>
-            <ColorSwatch c={pal.w.mix(pal.r, 0.5)} text={'wr'} />
-            <ColorSwatch c={pal.w.mix(pal.g, 0.5)} text={'wg'} />
-            <ColorSwatch c={pal.w.mix(pal.b, 0.5)} text={'wb'} />
-
-            <ColorSwatch c={pal.k.mix(pal.r, 0.5)} text={'kr'} />
-            <ColorSwatch c={pal.k.mix(pal.g, 0.5)} text={'kg'} />
-            <ColorSwatch c={pal.k.mix(pal.b, 0.5)} text={'kb'} />
-
-            <ColorSwatch c={pal.r.mix(pal.g, 0.5)} text={'rg'} />
-            <ColorSwatch c={pal.g.mix(pal.b, 0.5)} text={'gb'} />
-            <ColorSwatch c={pal.b.mix(pal.r, 0.5)} text={'br'} />
-
+        <div className='colorGrid'>
+            <ColorPicker style={{gridColumn: '1', gridRow: '1'}} state={state} name={'w'} />
+            <ColorPicker style={{gridColumn: '2', gridRow: '1'}} state={state} name={'r'} />
+            <ColorPicker style={{gridColumn: '3', gridRow: '1'}} state={state} name={'g'} />
+            <ColorPicker style={{gridColumn: '4', gridRow: '1'}} state={state} name={'b'} />
+            <ColorPicker style={{gridColumn: '5', gridRow: '1'}} state={state} name={'k'} />
         </div>
         <hr />
     </main>
